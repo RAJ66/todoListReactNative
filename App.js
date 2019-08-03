@@ -5,16 +5,16 @@
  * @format
  * @flow
  */
-
 import React, { Component } from 'react';
 import {
-  Button,
+  SafeAreaView,
   StyleSheet,
-  TextInput,
   View,
   Text,
   StatusBar,
-  FlatList
+  FlatList,
+  TextInput,
+  Button
 } from 'react-native';
 
 import {
@@ -33,27 +33,43 @@ class App extends Component<Props> {
     this.state = {
       text: "",
       items: [
-        { key: '0', desc: 'Item 1', done: false },
-        { key: '1', desc: 'Item 2', done: false },
+        { key: "0", desc: "Item 1", done: false },
+        { key: "1", desc: "Item 2", done: false }
       ]
     };
+
+    this.inserirItem = this.inserirItem.bind(this);
   }
 
   renderItem(obj) {
     return <Text style={styles.cell}>{obj.item.desc}</Text>;
   }
 
-  insertItem() {}
+  inserirItem() {
+    let newItem = {
+      key: this.state.items.length.toString(),
+      desc: this.state.text,
+      done: false,
+    };
+
+    let items = this.state.items;
+    items.push(newItem);
+    this.setState(items);
+
+    let text = '';
+    this.setState({ text });
+  }
 
   render() {
     return (
       <View style={styles.container}>
         <FlatList
-          style={styles.list}
+          style={styles.lista}
           data={this.state.items}
           renderItem={this.renderItem}
+          extraData={this.state}
         />
-        <View style={styles.intupView}>
+        <View style={styles.inputView}>
           <TextInput
             style={styles.input}
             onChangeText={text => {
@@ -61,32 +77,26 @@ class App extends Component<Props> {
             }}
             value={this.state.text}
           />
-          <Button
-            style={styles.Button}
-            onPress={this.insertItem}
-            title="Inserir"
-          />
+          <Button onPress={this.inserirItem} title="Inserir" />
         </View>
       </View>
     );
   }
 }
-
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: 'center',
-
     backgroundColor: '#F5FCFF',
   },
-  list: {
+  lista: {
     marginTop: 24
   },
   cell: {
-    paddingTop: 20,
+    padding: 20,
     paddingBottom: 20,
     paddingLeft: 20,
-    backgroundColor: "#E4EBEE",
+    backgroundColor: '#E4EBEE',
     fontSize: 18,
     marginBottom: 2
   },
@@ -98,10 +108,10 @@ const styles = StyleSheet.create({
     margin: 20,
     flex: 1
   },
-  intupView: {
-    flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "space-between",
+  inputView: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     paddingRight: 10
   },
 });
