@@ -107,7 +107,10 @@ class App extends Component<Props> {
             renderItem={this.renderItem}
             extraData={this.state}
           />
-          <View style={styles.inputView}>
+          
+          
+        </ScrollView>
+        <View style={styles.inputView}>
             <TextInput
               style={styles.input}
               onChangeText={text => {
@@ -117,7 +120,6 @@ class App extends Component<Props> {
             />
             <Button onPress={this.inserirItem} title='Inserir' />
           </View>
-        </ScrollView>
 
         <Animated.View style={[styles.HeaderStyle, { height: AnimateHeaderHeight, backgroundColor: AnimateHeaderBackgroundColor }]}>
 
@@ -125,6 +127,7 @@ class App extends Component<Props> {
 
         </Animated.View>
       </View>
+      
     );
   }
 }
