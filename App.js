@@ -14,7 +14,10 @@ import {
   StatusBar,
   FlatList,
   TextInput,
-  Button
+  Button,
+  Platform,
+  Animated,
+  ScrollView
 } from 'react-native';
 
 import {
@@ -25,6 +28,9 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
+//create constant
+const Header_Maximum_Height = 200;
+const Header_Minimum_Height = 50;
 
 type Props = {};
 class App extends Component<Props> {
@@ -39,6 +45,7 @@ class App extends Component<Props> {
     };
 
     this.inserirItem = this.inserirItem.bind(this);
+    this.AnimatedHeaderValue = new Animated.Value(0);
   }
 
   renderItem(obj) {
@@ -60,25 +67,63 @@ class App extends Component<Props> {
     this.setState({ text });
   }
 
+
+
   render() {
+
+    //change color
+    const AnimateHeaderBackgroundColor = this.AnimatedHeaderValue.interpolate(
+      {
+        inputRange: [0, (Header_Maximum_Height - Header_Minimum_Height)],
+
+        outputRange: ['#ff3300', '#ff6600'],
+
+        extrapolate: 'clamp'
+      });
+    //insert animation
+    const AnimateHeaderHeight = this.AnimatedHeaderValue.interpolate(
+      {
+        inputRange: [0, (Header_Maximum_Height - Header_Minimum_Height)],
+
+        outputRange: [Header_Maximum_Height, Header_Minimum_Height],
+
+        extrapolate: 'clamp'
+      });
+
     return (
       <View style={styles.container}>
-        <FlatList
-          style={styles.lista}
-          data={this.state.items}
-          renderItem={this.renderItem}
-          extraData={this.state}
-        />
-        <View style={styles.inputView}>
-          <TextInput
-            style={styles.input}
-            onChangeText={text => {
-              this.setState({ text });
-            }}
-            value={this.state.text}
+        <ScrollView
+
+          scrollEventThrottle={16}
+
+          contentContainerStyle={{ paddingTop: Header_Maximum_Height }}
+
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: this.AnimatedHeaderValue } } }]
+          )}>
+          <FlatList
+            style={styles.lista}
+            data={this.state.items}
+            renderItem={this.renderItem}
+            extraData={this.state}
           />
-          <Button onPress={this.inserirItem} title='Inserir' />
-        </View>
+          <View style={styles.inputView}>
+            <TextInput
+              style={styles.input}
+              onChangeText={text => {
+                this.setState({ text });
+              }}
+              value={this.state.text}
+            />
+            <Button onPress={this.inserirItem} title='Inserir' />
+          </View>
+        </ScrollView>
+
+        <Animated.View style={[styles.HeaderStyle, { height: AnimateHeaderHeight, backgroundColor: AnimateHeaderBackgroundColor }]}>
+
+          <Text style={styles.HeaderInsideTextStyle}> To do list header animation </Text>
+
+        </Animated.View>
       </View>
     );
   }
@@ -88,6 +133,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: 'center',
     backgroundColor: '#F5FCFF',
+    paddingTop: (Platform.OS == 'ios') ? 20 : 0
   },
   lista: {
     marginTop: 24
@@ -114,6 +160,21 @@ const styles = StyleSheet.create({
     justifyContent: 'space-between',
     paddingRight: 10
   },
+  HeaderStyle:
+    {
+        justifyContent: 'center',
+        alignItems: 'center',
+        position: 'absolute',
+        left: 0,
+        right: 0,
+        top: (Platform.OS == 'ios') ? 20 : 0,
+    },
+    HeaderInsideTextStyle:
+    {
+        color: "#fff",
+        fontSize: 18,
+        textAlign: 'center'
+    },
 });
 
 export default App;
