@@ -25,16 +25,16 @@ import {
   ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
 
-//const App = () => {
+
 type Props = {};
 class App extends Component<Props> {
   constructor(props) {
     super(props);
     this.state = {
-      text: "",
+      text: '',
       items: [
-        { key: "0", desc: "Item 1", done: false },
-        { key: "1", desc: "Item 2", done: false }
+        { key: '0', desc: 'Item 1', done: false },
+        { key: '1', desc: 'Item 2', done: false }
       ]
     };
 
@@ -77,7 +77,7 @@ class App extends Component<Props> {
             }}
             value={this.state.text}
           />
-          <Button onPress={this.inserirItem} title="Inserir" />
+          <Button onPress={this.inserirItem} title='Inserir' />
         </View>
       </View>
     );
