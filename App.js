@@ -5,7 +5,7 @@
  * @format
  * @flow
  */
-import React, { Component } from 'react';
+import React, { Component, Fragment } from 'react';
 import {
   SafeAreaView,
   StyleSheet,
@@ -94,43 +94,43 @@ class App extends Component {
       });
 
     return (
-      <View style={styles.container}>
-        <ScrollView
+          <View style={styles.container}>
+            <StatusBar backgroundColor="black" barStyle="white" />
+            <ScrollView
 
-          scrollEventThrottle={16}
+              scrollEventThrottle={16}
 
-          contentContainerStyle={{ paddingTop: Header_Maximum_Height }}
+              contentContainerStyle={{ paddingTop: Header_Maximum_Height }}
 
-          onScroll={Animated.event(
-            [{ nativeEvent: { contentOffset: { y: this.AnimatedHeaderValue } } }]
-          )}>
-          <FlatList
-            style={styles.lista}
-            data={this.state.items}
-            renderItem={this.renderItem}
-            extraData={this.state}
-          />
-          
-          
-        </ScrollView>
-        <View style={styles.inputView}>
-            <TextInput
-              style={styles.input}
-              onChangeText={text => {
-                this.setState({ text });
-              }}
-              value={this.state.text}
-            />
-            <Button onPress={this.inserirItem} title='Inserir' />
+              onScroll={Animated.event(
+                [{ nativeEvent: { contentOffset: { y: this.AnimatedHeaderValue } } }]
+              )}>
+              <FlatList
+                style={styles.lista}
+                data={this.state.items}
+                renderItem={this.renderItem}
+                extraData={this.state}
+              />
+
+
+            </ScrollView>
+            <View style={styles.inputView}>
+              <TextInput
+                style={styles.input}
+                onChangeText={text => {
+                  this.setState({ text });
+                }}
+                value={this.state.text}
+              />
+              <Button onPress={this.inserirItem} title='Inserir' />
+            </View>
+
+            <Animated.View style={[styles.HeaderStyle, { height: AnimateHeaderHeight, backgroundColor: AnimateHeaderBackgroundColor }]}>
+
+              <Text style={styles.HeaderInsideTextStyle}> To do list header animation </Text>
+
+            </Animated.View>
           </View>
-
-        <Animated.View style={[styles.HeaderStyle, { height: AnimateHeaderHeight, backgroundColor: AnimateHeaderBackgroundColor }]}>
-
-          <Text style={styles.HeaderInsideTextStyle}> To do list header animation </Text>
-
-        </Animated.View>
-      </View>
-      
     );
   }
 }
@@ -167,20 +167,21 @@ const styles = StyleSheet.create({
     paddingRight: 10
   },
   HeaderStyle:
-    {
-        justifyContent: 'center',
-        alignItems: 'center',
-        position: 'absolute',
-        left: 0,
-        right: 0,
-        top: (Platform.OS == 'ios') ? 20 : 0,
-    },
-    HeaderInsideTextStyle:
-    {
-        color: "#fff",
-        fontSize: 18,
-        textAlign: 'center'
-    },
+  {
+    justifyContent: 'center',
+    alignItems: 'center',
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: (Platform.OS == 'ios') ? 20 : 0,
+  },
+  HeaderInsideTextStyle:
+  {
+    color: "#fff",
+    fontSize: 18,
+    textAlign: 'center'
+  },
+ 
 });
 
 export default App;
