@@ -32,8 +32,8 @@ import {
 const Header_Maximum_Height = 200;
 const Header_Minimum_Height = 50;
 
-type Props = {};
-class App extends Component<Props> {
+
+class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -58,7 +58,10 @@ class App extends Component<Props> {
       desc: this.state.text,
       done: false,
     };
-
+    //
+    if (newItem.desc.length === 0) {
+      return;
+    }
     let items = this.state.items;
     items.push(newItem);
     this.setState(items);
