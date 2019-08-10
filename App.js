@@ -1,13 +1,6 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- * @flow
- */
-import React, { Component, Fragment } from 'react';
+
+import React, { Component } from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
   View,
   Text,
@@ -20,20 +13,14 @@ import {
   ScrollView
 } from 'react-native';
 
-import {
-  Header,
-  LearnMoreLinks,
-  Colors,
-  DebugInstructions,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+
 
 //create constant
 const Header_Maximum_Height = 200;
 const Header_Minimum_Height = 50;
 
 
-class App extends Component {
+export default class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -94,43 +81,43 @@ class App extends Component {
       });
 
     return (
-          <View style={styles.container}>
-            <StatusBar backgroundColor="black" barStyle="white" />
-            <ScrollView
+      <View style={styles.container}>
+        <StatusBar backgroundColor="black" barStyle="white" />
+        <ScrollView
 
-              scrollEventThrottle={16}
+          scrollEventThrottle={16}
 
-              contentContainerStyle={{ paddingTop: Header_Maximum_Height }}
+          contentContainerStyle={{ paddingTop: Header_Maximum_Height }}
 
-              onScroll={Animated.event(
-                [{ nativeEvent: { contentOffset: { y: this.AnimatedHeaderValue } } }]
-              )}>
-              <FlatList
-                style={styles.lista}
-                data={this.state.items}
-                renderItem={this.renderItem}
-                extraData={this.state}
-              />
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: this.AnimatedHeaderValue } } }]
+          )}>
+          <FlatList
+            style={styles.lista}
+            data={this.state.items}
+            renderItem={this.renderItem}
+            extraData={this.state}
+          />
 
 
-            </ScrollView>
-            <View style={styles.inputView}>
-              <TextInput
-                style={styles.input}
-                onChangeText={text => {
-                  this.setState({ text });
-                }}
-                value={this.state.text}
-              />
-              <Button onPress={this.inserirItem} title='Inserir' />
-            </View>
+        </ScrollView>
+        <View style={styles.inputView}>
+          <TextInput
+            style={styles.input}
+            onChangeText={text => {
+              this.setState({ text });
+            }}
+            value={this.state.text}
+          />
+          <Button onPress={this.inserirItem} title='Inserir' />
+        </View>
 
-            <Animated.View style={[styles.HeaderStyle, { height: AnimateHeaderHeight, backgroundColor: AnimateHeaderBackgroundColor }]}>
+        <Animated.View style={[styles.HeaderStyle, { height: AnimateHeaderHeight, backgroundColor: AnimateHeaderBackgroundColor }]}>
 
-              <Text style={styles.HeaderInsideTextStyle}> To do list header animation </Text>
+          <Text style={styles.HeaderInsideTextStyle}> To do list header animation </Text>
 
-            </Animated.View>
-          </View>
+        </Animated.View>
+      </View>
     );
   }
 }
@@ -181,7 +168,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     textAlign: 'center'
   },
- 
+
 });
 
-export default App;
